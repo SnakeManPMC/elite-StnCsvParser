@@ -22,7 +22,7 @@ Widget::~Widget()
 void Widget::RedList()
 {
 	// red list source CSV
-	QFile file("d:\\coding\\test_files\\Stations_Red.csv");
+	QFile file("Stations_Red.csv");
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QMessageBox::information(this, tr("Unable to open Red List source CSV file"), file.errorString());
@@ -51,7 +51,7 @@ void Widget::RedList()
 void Widget::Doit()
 {
 	// source CSV
-	QFile file("d:\\coding\\test_files\\Stations_Maddavo.csv");
+	QFile file("Stations_Maddavo.csv");
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QMessageBox::information(this, tr("Unable to open source CSV file"), file.errorString());
@@ -59,7 +59,7 @@ void Widget::Doit()
 	QTextStream in(&file);
 
 	// exported missing pad info CSV
-	QFile expfile("d:\\coding\\test_files\\Stations_Maddavo_Missing_Pad_Info.csv");
+	QFile expfile("Stations_Maddavo_Missing_Pad_Info.csv");
 	if (!expfile.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		QMessageBox::information(this, tr("Unable to open export CSV file"), expfile.errorString());
