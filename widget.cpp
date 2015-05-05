@@ -9,8 +9,6 @@ Widget::Widget(QWidget *parent) :
 	ui(new Ui::Widget)
 {
 	ui->setupUi(this);
-	RedList();
-	Doit();
 }
 
 Widget::~Widget()
@@ -48,10 +46,10 @@ void Widget::RedList()
 }
 
 
-void Widget::Doit()
+void Widget::Doit(QString filename)
 {
 	// source CSV
-	QFile file("Stations_Maddavo.csv");
+	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QMessageBox::information(this, tr("Unable to open source CSV file"), file.errorString());
@@ -100,4 +98,19 @@ void Widget::Doit()
 	expfile.close();
 	ui->textEdit->append("Stations in CSV: " + QString::number(stations) + "\nMissing Statistics\nDistance to Star: " + QString::number(ls)
 			     + "\nLanding Pad: " + QString::number(pad) + "\nTotal stations exported: " + QString::number(totalmissing) + "\nAll done, exit bitch!");
+}
+
+
+void Widget::RunMe(int argc, char *argv[])
+{
+	//Check_Parameters(argc, argv);
+	if (argc < 2)
+	{
+		printf("Incorrect parameters supplied.\nUsage:\n\nexe SOURCE.csv\n\n");
+		exit(1);
+	}
+
+	// run the actual program
+	RedList();
+	Doit(argv[1]);
 }

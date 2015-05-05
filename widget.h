@@ -14,10 +14,11 @@ class Widget : public QWidget
 public:
 	explicit Widget(QWidget *parent = 0);
 	~Widget();
+	void RunMe(int argc, char *argv[]);
 
 private:
 	Ui::Widget *ui;
-	void Doit();
+	void Doit(QString filename);
 	void RedList();
 	QStringList SystemsRedList;
 };
