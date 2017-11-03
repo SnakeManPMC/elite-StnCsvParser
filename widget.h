@@ -14,12 +14,12 @@ class Widget : public QWidget
 public:
 	explicit Widget(QWidget *parent = 0);
 	~Widget();
-	void RunMe(int argc, char *argv[]);
+	void runWithParameters(int argc, char *argv[]);
 
 private:
 	Ui::Widget *ui;
-	void Doit(QString filename);
-	void RedList();
+	void createMissingStationListCSV(QString filename);
+	void readRedListCSV();
 	QStringList SystemsRedList;
 };
 

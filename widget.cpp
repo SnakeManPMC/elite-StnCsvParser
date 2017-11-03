@@ -9,6 +9,7 @@ Widget::Widget(QWidget *parent) :
 	ui(new Ui::Widget)
 {
 	ui->setupUi(this);
+	setWindowTitle("Station CSV Parser by PMC");
 }
 
 Widget::~Widget()
@@ -17,7 +18,7 @@ Widget::~Widget()
 }
 
 
-void Widget::RedList()
+void Widget::readRedListCSV()
 {
 	// red list source CSV
 	QFile file("Stations_Red.csv");
@@ -46,7 +47,7 @@ void Widget::RedList()
 }
 
 
-void Widget::Doit(QString filename)
+void Widget::createMissingStationListCSV(QString filename)
 {
 	// source CSV
 	QFile file(filename);
@@ -101,7 +102,7 @@ void Widget::Doit(QString filename)
 }
 
 
-void Widget::RunMe(int argc, char *argv[])
+void Widget::runWithParameters(int argc, char *argv[])
 {
 	//Check_Parameters(argc, argv);
 	if (argc < 2)
@@ -111,6 +112,6 @@ void Widget::RunMe(int argc, char *argv[])
 	}
 
 	// run the actual program
-	RedList();
-	Doit(argv[1]);
+	readRedListCSV();
+	createMissingStationListCSV(argv[1]);
 }
