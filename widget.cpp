@@ -69,8 +69,8 @@ void Widget::createMissingStationListCSV(QString filename)
 	QStringList list;
 
 	// statistic numbers
-	int stations,ls,pad,totalmissing;
-	stations = 0, ls = 0, pad = 0, totalmissing = 0;
+	int station,planetary,ls,pad,totalmissing;
+	station = 0, planetary = 0, ls = 0, pad = 0, totalmissing = 0;
 
 	// header
 	header = in.readLine();
@@ -79,15 +79,20 @@ void Widget::createMissingStationListCSV(QString filename)
 	while (!in.atEnd())
 	{
 		line = in.readLine();
-		// increment stations
-		stations++;
 		list = line.split(",");
+		/*
+11-03-17 station.csv format with new planetary landing outposts at the end of the line:
+unq:name@System.system_id,unq:name,ls_from_star,blackmarket,max_pad_size,market,shipyard,modified,outfitting,rearm,refuel,repair,planetary
+'1 G. CAELI','Yize Camp',3490,'N','?','N','N','2016-11-26 20:45:06','N','N','N','N','Y'
+		*/
 		//ui->textEdit->append("System: " + list[0] + ", Station: " + list[1] + ", Ls: " + list[2] + ", Pad: " + list[4]);
 		// incdement statistics numbers
 		if (list[2] == "0") ls++;
 		if (list[4] == "'?'") pad++;
-		// and check if we export our missing line or not
-		if ( (list[2] == "0" || list[4] == "'?'") && !SystemsRedList.contains(list[0]) )
+		if (list[12] == "'N'") station++;
+		if (list[12] == "'Y'") planetary++;
+		// and check if we export our missing line or not, distance zero, pad unknown and not planetary
+		if ( (list[2] == "0" || list[4] == "'?'") && list[12] == "'N'" && !SystemsRedList.contains(list[0]) )
 		{
 			// increment our exported list
 			totalmissing++;
@@ -97,7 +102,7 @@ void Widget::createMissingStationListCSV(QString filename)
 	}
 	file.close();
 	expfile.close();
-	ui->textEdit->append("Stations in CSV: " + QString::number(stations) + "\nMissing Statistics\nDistance to Star: " + QString::number(ls)
+	ui->textEdit->append("Stations in CSV: " + QString::number(station) + "\nPlanetary: " + QString::number(planetary) + "\nMissing Statistics\nDistance to Star: " + QString::number(ls)
 			     + "\nLanding Pad: " + QString::number(pad) + "\nTotal stations exported: " + QString::number(totalmissing) + "\nAll done, exit bitch!");
 }
 
